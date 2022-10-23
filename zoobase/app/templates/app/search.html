@@ -1,0 +1,191 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+{% load render_table from django_tables2 %}
+
+{% block title %} {{ title }} - {{ block.super }} {% endblock %}
+
+
+{% block content %}
+    <h1 class="display-5">Введите данные для поиска</h1>
+
+    <form action="" method="get">
+
+        {#строка поиска по номеру клейма#}
+        <div class="row g-4">
+            <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-select" name="{{ filter.form.type_id.name }}"
+                            id="{{ filter.form.type_id.id_for_label }}"
+                            aria-label="{{ filter.form.type_id.label }}">
+                        {% for item in filter.form.type_id %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+                    <label for="{{ filter.form.type_id.id_for_label }}">{{ filter.form.type_id.label }}</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="number" name="{{ filter.form.number.name }}" class="form-control"
+                           id="{{ filter.form.number.id_for_label }}"
+                           placeholder="{{ filter.form.number.label }}">
+                    <label for="{{ filter.form.number.id_for_label }}">{{ filter.form.number.label }}</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="number" name="{{ filter.form.number__gt.name }}" class="form-control"
+                           id="{{ filter.form.number__gt.id_for_label }}"
+                           placeholder="{{ filter.form.number__gt.label }}">
+                    <label for="{{ filter.form.number__gt.id_for_label }}">{{ filter.form.number__gt.label }}</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="number" name="{{ filter.form.number__lt.name }}" class="form-control"
+                           id="{{ filter.form.number__lt.id_for_label }}"
+                           placeholder="{{ filter.form.number__lt.label }}">
+                    <label for="{{ filter.form.number__lt.id_for_label }}">{{ filter.form.number__lt.label }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-2">
+            {#        номер бирки#}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="number" name="{{ filter.form.tag_number.name }}" class="form-control"
+                           id="{{ filter.form.tag_number.id_for_label }}"
+                           placeholder="{{ filter.form.tag_number.label }}">
+                    <label for="{{ filter.form.tag_number.id_for_label }}">{{ filter.form.tag_number.label }}</label>
+                </div>
+            </div>
+            {#        номер телефона#}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="number" name="{{ filter.form.phone_number.name }}" class="form-control"
+                           id="{{ filter.form.phone_number.id_for_label }}"
+                           placeholder="{{ filter.form.phone_number.label }}">
+                    <label for="{{ filter.form.phone_number.id_for_label }}">{{ filter.form.phone_number.label }}</label>
+                    <p>{{ filter.form.phone_number.help_text }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            {#        тип животного#}
+            <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-select" name="{{ filter.form.type_animal.name }}"
+                            id="{{ filter.form.type_animal.id_for_label }}"
+                            aria-label="{{ filter.form.type_animal.label }}">
+                        {% for item in filter.form.type_animal %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+                    <label for="{{ filter.form.type_animal.id_for_label }}">{{ filter.form.type_animal.label }}</label>
+                </div>
+            </div>
+            {#        пол#}
+            <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-select" name="{{ filter.form.sex.name }}"
+                            id="{{ filter.form.sex.id_for_label }}"
+                            aria-label="{{ filter.form.sex.label }}">
+                        {% for item in filter.form.sex %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+                    <label for="{{ filter.form.sex.id_for_label }}">{{ filter.form.sex.label }}</label>
+                </div>
+            </div>
+            {#        домашние#}
+            <div class="col-md">
+                <div class="form-floating">
+                    <select class="form-select" name="{{ filter.form.the_pet.name }}"
+                            id="{{ filter.form.the_pet.id_for_label }}"
+                            aria-label="{{ filter.form.the_pet.label }}">
+                        {% for item in filter.form.the_pet %}
+                            {{ item }}
+                        {% endfor %}
+                    </select>
+                    <label for="{{ filter.form.the_pet.id_for_label }}">{{ filter.form.the_pet.label }}</label>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row g-3">
+            {#        мастер #}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="text" name="{{ filter.form.master.name }}" class="form-control"
+                           id="{{ filter.form.master.id_for_label }}"
+                           placeholder="{{ filter.form.master.label }}">
+                    <label for="{{ filter.form.master.id_for_label }}">{{ filter.form.master.label }}</label>
+                </div>
+            </div>
+            {#        описание #}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="text" name="{{ filter.form.description.name }}" class="form-control"
+                           id="{{ filter.form.description.id_for_label }}"
+                           placeholder="{{ filter.form.description.label }}">
+                    <label for="{{ filter.form.description.id_for_label }}">{{ filter.form.description.label }}</label>
+                </div>
+            </div>
+            {#            автор#}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="text" name="{{ filter.form.author.name }}" class="form-control"
+                           id="{{ filter.form.author.id_for_label }}"
+                           placeholder="{{ filter.form.author.label }}">
+                    <label for="{{ filter.form.author.id_for_label }}">{{ filter.form.author.label }}</label>
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            {#            даты#}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="date" name="{{ filter.form.date_created.name }}" class="form-control"
+                           id="{{ filter.form.date_created.id_for_label }}"
+                           placeholder="{{ filter.form.date_created.label }}">
+                    <label for="{{ filter.form.date_created.id_for_label }}">{{ filter.form.date_created.label }}</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="date" name="{{ filter.form.date_created__gt.name }}" class="form-control"
+                           id="{{ filter.form.date_created__gt.id_for_label }}"
+                           placeholder="{{ filter.form.date_created__gt.label }}">
+                    <label for="{{ filter.form.date_created__gt.id_for_label }}">{{ filter.form.date_created__gt.label }}</label>
+                </div>
+            </div>
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    <input type="date" name="{{ filter.form.date_created__lt.name }}" class="form-control"
+                           id="{{ filter.form.date_created__lt.id_for_label }}"
+                           placeholder="{{ filter.form.date_created__lt.label }}">
+                    <label for="{{ filter.form.date_created__lt.id_for_label }}">{{ filter.form.date_created__lt.label }}</label>
+                </div>
+            </div>
+
+        </div>
+        <div class="row">
+            <div class="col-md center">
+                <input type="submit" class="btn btn-primary" value="Найти"/>
+                <a href="{% url 'search' %}" class="btn btn-primary" >Очистить форму</a>
+            </div>
+        </div>
+    </form>
+    <br>
+    <div class="row">
+        <div class="col">
+            {% if not_found %}
+                <p class="fs-3">{{ not_found }}</p>
+                <p><input type="button" class="btn btn-primary" onclick="history.back();" value="Вернуться назад"/></p>
+            {% else %}
+                {% render_table table %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

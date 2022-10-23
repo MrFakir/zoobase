@@ -1,0 +1,167 @@
+{% extends 'app/base.html' %}
+{% load static %}
+
+
+{% block title %} {{ title }} - {{ block.super }} {% endblock %}
+
+
+{% block content %}
+<h1 class="display-5">Добавить новую запись</h1>
+    {% if messages %}
+     {% for message in messages %}
+         <div class="alert alert-{{ message.tags }}" role="alert">
+             {{ message|safe }}
+         </div>
+     {% endfor %}
+ {% endif %}
+    <form action="" method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+
+        <div class="row g-4">
+            <div class="col-md">
+                <div class="form-floating">
+                    {{ form.type }}
+                    <label for="{{ form.type.id_for_label }}">{{ form.type.label }}</label>
+                    {% if form.type.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.type.errors }}</div>
+                    {% endif %}
+                </div>
+
+            </div>
+
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    {{ form.number }}
+                    <label for="{{ form.number.id_for_label }}">{{ form.number.label }}</label>
+                    {% if form.number.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.number.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {#        номер бирки#}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    {{ form.tag_number }}
+                    <label for="{{ form.tag_number.id_for_label }}">{{ form.tag_number.label }}</label>
+                    {% if form.tag_number.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.tag_number.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {#        номер телефона#}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    {{ form.phone_number }}
+                    <label for="{{ form.phone_number.id_for_label }}">{{ form.phone_number.label }}</label>
+                    {% if form.phone_number.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.phone_number.errors }}</div>
+                    {% endif %}
+
+                </div>
+            </div>
+        </div>
+        <div class="row g-3">
+            {#        тип животного#}
+            <div class="col-md">
+                <div class="form-floating">
+                    {{ form.type_animal }}
+                    <label for="{{ form.type_animal.id_for_label }}">{{ form.type_animal.label }}</label>
+                    {% if form.type_animal.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.type_animal.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {#        пол#}
+            <div class="col-md">
+                <div class="form-floating">
+                    {{ form.sex }}
+                    <label for="{{ form.sex.id_for_label }}">{{ form.sex.label }}</label>
+                    {% if form.sex.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.sex.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {#        домашние#}
+            <div class="col-md">
+                <div class="form-check">
+
+                    {{ form.the_pet }}
+                    <label class="{{ form.the_pet.label }}" for="{{ form.the_pet.id_for_label }}">
+                        {{ form.the_pet.label }}
+                    </label>
+                    {% if form.the_pet.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.the_pet.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+            {#        мастер #}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    {{ form.master }}
+                    <label for="{{ form.master.id_for_label }}">{{ form.master.label }}</label>
+                    {% if form.master.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.master.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-3">
+            {#        описание #}
+            <div class="col-md">
+                <div class="form-floating mb-3">
+                    {{ form.description }}
+                    <label for="{{ form.description.id_for_label }}"> {{ form.description.label }} </label>
+                    {% if form.description.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.description.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md">
+                <input type="submit" class="btn btn-primary" value="Добавить"/>
+                <input type="reset" class="btn btn-primary" value="Очистить форму"/>
+            </div>
+        </div>
+    </form>
+
+
+
+    {#    <form action="{% url 'add_page' %}" method="post" novalidate>#}
+    {#        {% csrf_token %}#}
+    {##}
+    {#        <div class="form-error">{{ form.non_field_errors }}</div>#}
+    {##}
+    {#        {% for f in form %}#}
+    {#        <div class="row g-3">#}
+    {#            <div class="col-md">#}
+    {#                <div class="form-floating">#}
+    {#                    {{ f }}#}
+    {#                    <input type="text" name="{{ form.description.name }}" class="form-control"#}
+    {#                           id="{{ form.description.id_for_label }}"#}
+    {#                           placeholder="{{ form.description.label }}">#}
+    {#                    <label for="{{ f.id_for_label }}">{{ f.label }}</label>#}
+    {#                </div>#}
+    {#            </div>#}
+
+
+
+
+    {#            <p><label class="form-label" for="{{ f.id_for_label }}">{{ f.label }}: </label>{{ f }}</p>#}
+    {#            {{ f.help_text }}#}
+    {#            <div class="form-error">{{ f.errors }}</div>#}
+    {#        {% endfor %}#}
+
+
+    {#        <button type="submit">Добавить</button>#}
+    {#    </form>#}
+
+
+
+{% endblock %}
