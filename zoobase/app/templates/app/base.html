@@ -13,9 +13,14 @@
 <body>
 
 <div class="container-fluid">
+    {% if request.user.is_authenticated %}
+        {% show_menu active_class=active auth=True username=user.username %}
+    {% else %}
+        {% show_menu active_class=active %}
+    {% endif %}
 
-    {% show_menu active_class=active %}
-<div class="row"><br></div>
+    <div class="row"><br></div>
+    <h1 class="display-5">{{ title }}</h1>
     {% block content %} {% endblock %}
 </div>
 

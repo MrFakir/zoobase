@@ -6,7 +6,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 {% for m in menu %}
                     <li class="nav-item">
                         {% if active_class == m.url_name %}
@@ -16,6 +16,21 @@
                         {% endif %}
                     </li>
                 {% endfor %}
+            </ul>
+            <ul class="navbar-nav">
+                {% if auth %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page"
+                           href="{% url 'login' %}">Привет {{ username }}!</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Выход</a>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{% url 'login' %}">Войти</a>
+                    </li>
+                {% endif %}
             </ul>
         </div>
     </div>

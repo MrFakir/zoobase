@@ -1,0 +1,38 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    {{ form.username }}
+                    <label for="{{ form.username.id_for_label }}">{{ form.username.label }}</label>
+                    {% if form.username.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.username.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    {{ form.password }}
+                    <label for="{{ form.password.id_for_label }}">{{ form.password.label }}</label>
+                    {% if form.password.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.password.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <input type="submit" class="btn btn-primary" value="Войти"/>
+    </form>
+
+{% endblock %}

@@ -1,3 +1,4 @@
+from django.contrib.auth.forms import AuthenticationForm
 from django.core.exceptions import ValidationError
 from django import forms
 
@@ -7,16 +8,14 @@ from .models import Stigmas
 class AddStigmaForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.fields['type_animal'].empty_label = "Категория не выбрана"
-        self.fields['sex'].empty_label = "Категория не выбрана"
-        self.fields['type'].empty_label = "Категория не выбрана"
+        self.fields['type_animal'].empty_label = 'Не выбрано'
+        self.fields['sex'].empty_label = 'Не выбрано'
+        self.fields['type'].empty_label = 'Не выбрано'
 
     class Meta:
         model = Stigmas
         fields = ['type', 'number', 'tag_number', 'type_animal', 'sex', 'the_pet', 'master', 'phone_number',
                   'description']
-
-
 
         widgets = {
             'number': forms.NumberInput(
@@ -38,9 +37,8 @@ class AddStigmaForm(forms.ModelForm):
                        'placeholder': model.description.field.verbose_name}),
         }
 
-    # def clean_title(self):
-    #     title = self.cleaned_data['title']
-    #     if len(title) > 200:
-    #         raise ValidationError('Длина превышает 200 символов')
-    #
-    #     return title
+
+class LoginUserForm(AuthenticationForm):
+    username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control', }))
+    password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control', }))
+

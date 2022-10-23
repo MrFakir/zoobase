@@ -6,6 +6,7 @@ urlpatterns = [
     path('', Home.as_view(), name='home'),
     path('search/', Search.as_view(), name='search'),
     path('add/', AddPage.as_view(), name='add_page'),
+    path('login/', LoginUser.as_view(), name='login'),
     # path('app/', index1),
     # path('<str:slag>/', index1),
 ]
