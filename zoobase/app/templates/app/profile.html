@@ -1,10 +1,72 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'app/base.html' %}
+{% load static %}
 
-</body>
-</html>
+{% load render_table from django_tables2 %}
+
+{% block title %} {{ title }} - {{ block.super }} {% endblock %}
+
+
+{% block content %}
+
+    {% if messages %}
+        {% for message in messages %}
+            <div class="alert alert-{{ message.tags }}" role="alert">
+                {{ message|safe }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <form method="post">
+        {% csrf_token %}
+        {% if form.non_field_errors %}
+            <div class="alert alert-danger" role="alert">
+                {{ form.non_field_errors }}
+            </div>
+        {% endif %}
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    {{ form.first_name }}
+                    <label for="{{ form.first_name.id_for_label }}">{{ form.first_name.label }}</label>
+                    {% if form.first_name.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.first_name.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    {{ form.last_name }}
+                    <label for="{{ form.last_name.id_for_label }}">{{ form.last_name.label }}</label>
+                    {% if form.last_name.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.last_name.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="form-floating mb-3">
+                    {{ form.email }}
+                    <label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>
+                    {% if form.email.errors %}
+                        <div class="alert alert-danger" role="alert">{{ form.email.errors }}</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        <div class="col-md">
+            <input type="submit" class="btn btn-primary" value="Добавить"/>
+            <input type="reset" class="btn btn-primary" value="Очистить форму"/>
+        </div>
+    </form>
+    {% if admin_url %}
+        <a class="nav-link" aria-current="page" href="{% url 'admin:index' %}">Админка</a>
+    {% endif %}
+
+
+
+
+{% endblock %}

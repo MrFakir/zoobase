@@ -5,10 +5,10 @@ from .validators import validate_phone
 
 class Stigmas(models.Model):
     slug = models.SlugField(max_length=255, db_index=True, verbose_name="URL")
-    type = models.ForeignKey('TypeStigmas', on_delete=models.PROTECT, verbose_name='Тип клейма',
+    type = models.ForeignKey('TypeStigmas', on_delete=models.PROTECT, verbose_name='Б. клейма',
                              help_text='Выберете тип клейма')
-    number = models.IntegerField(verbose_name='Номер клейма', help_text='Введите номер клейма')
-    tag_number = models.CharField(max_length=20, verbose_name='Номер бирки',
+    number = models.IntegerField(verbose_name='Клеймо', help_text='Введите номер клейма')
+    tag_number = models.CharField(max_length=20, verbose_name='Бирка',
                                   help_text='Введите номер бирки, при наличии')
     type_animal = models.ForeignKey('TypeAnimals', on_delete=models.PROTECT, verbose_name='Тип животного',
                                     help_text='Выберете тип животного')

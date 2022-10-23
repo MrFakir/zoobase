@@ -1,4 +1,5 @@
 from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
 
@@ -42,3 +43,24 @@ class LoginUserForm(AuthenticationForm):
     username = forms.CharField(label='Имя пользователя', widget=forms.TextInput(attrs={'class': 'form-control', }))
     password = forms.CharField(label='Пароль', widget=forms.PasswordInput(attrs={'class': 'form-control', }))
 
+
+class ProfileUserForm(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name', 'last_name', 'email', ]
+        widgets = {
+            'first_name': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': ''}),
+            'last_name': forms.TextInput(
+                attrs={'class': 'form-control', 'placeholder': ''}),
+            'email': forms.EmailInput(
+                attrs={'class': 'form-control', 'placeholder': ''}),
+
+        }
+
+    def clean_email(self):
+        email = self.cleaned_data['email']
+        if User.objects.filter(email=email).count():
+            raise ValidationError('Такой Email уже есть')
+
+        return email

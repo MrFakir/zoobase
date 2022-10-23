@@ -22,6 +22,7 @@ from zoobase import settings
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # path('adminffwfw3242342/', admin.site.urls),
     path('', include('app.urls')),
 ]
 
