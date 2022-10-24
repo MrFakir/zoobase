@@ -1,6 +1,9 @@
 from django.db import models
 from django.urls import reverse
 from .validators import validate_phone
+from django.contrib.auth.models import User
+
+User._meta.get_field('email')._unique = True
 
 
 class Stigmas(models.Model):
@@ -89,7 +92,6 @@ class TypeAnimals(models.Model):
         verbose_name = 'Вид животного'
         verbose_name_plural = 'Вид животного'
         ordering = ['id']
-
 
 # class MainMenu(models.Model):
 #     name = models.CharField(max_length=25, db_index=True, verbose_name="Пункт меню")

@@ -21,7 +21,7 @@
                 {% if auth %}
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page"
-                           href="{% url 'profile' username %}">Привет {{ username }}!</a>
+                           href="{% url 'profile' username_url %}">Привет {{ username }}!</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">Выход</a>

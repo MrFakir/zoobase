@@ -58,7 +58,8 @@
             </div>
         </div>
         <div class="col-md">
-            <input type="submit" class="btn btn-primary" value="Добавить"/>
+            <input type="submit" class="btn btn-primary" value="Обновить данные"/>
+            <a class="btn btn-primary" aria-current="page" href="{% url 'password' user.username %}">Сменить пароль</a>
             <input type="reset" class="btn btn-primary" value="Очистить форму"/>
         </div>
     </form>

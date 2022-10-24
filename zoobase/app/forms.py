@@ -1,4 +1,4 @@
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ValidationError
 from django import forms
@@ -55,12 +55,20 @@ class ProfileUserForm(forms.ModelForm):
                 attrs={'class': 'form-control', 'placeholder': ''}),
             'email': forms.EmailInput(
                 attrs={'class': 'form-control', 'placeholder': ''}),
-
         }
 
-    def clean_email(self):
-        email = self.cleaned_data['email']
-        if User.objects.filter(email=email).count():
-            raise ValidationError('Такой Email уже есть')
+    # def clean_email(self):
+    #     email = self.cleaned_data['email']
+    #     if User.objects.filter(email=email).count():
+    #         raise ValidationError('Такой Email уже есть')
+    #
+    #     return email
 
-        return email
+
+class CustomAdminPasswordChangeForm(AdminPasswordChangeForm):
+    password1 = forms.CharField(label='Новый пароль',
+                                widget=forms.PasswordInput(
+                                    attrs={'class': 'form-control', 'placeholder': 'Новый пароль'}))
+    password2 = forms.CharField(label='Повторите новый пароль',
+                                widget=forms.PasswordInput(
+                                    attrs={'class': 'form-control', 'placeholder': 'Повторите новый пароль'}))

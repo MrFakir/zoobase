@@ -1,5 +1,5 @@
 from django.contrib.auth import logout
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
@@ -12,9 +12,10 @@ from django_filters.views import FilterView
 from django_tables2 import SingleTableView
 from django.contrib import admin
 from .filters import StigmasFilter
-from .forms import AddStigmaForm, LoginUserForm, ProfileUserForm
+from .forms import AddStigmaForm, LoginUserForm, ProfileUserForm, CustomAdminPasswordChangeForm
 from .tables import SearchTable, HomeTable
 from .utils import TableViewsMixin
+from django.contrib.auth import views as auth_views
 
 
 class Home(TableViewsMixin, SingleTableView):
@@ -94,7 +95,6 @@ class ProfileUser(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     Страница профиля пользователя
     """
     model = User
-    # fields = ['first_name', 'last_name', 'email', ]
     form_class = ProfileUserForm
     slug_field = 'username'
     slug_url_kwarg = 'slug'
@@ -105,28 +105,12 @@ class ProfileUser(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'slug': self.request.user})
 
-    # def get_initial(self):
-    #     initial = super().get_initial()
-    #     user = self.request.user
-    #     initial.update({
-    #         'username': user.username or '',
-    #         'first_name': user.first_name or '',
-    #         'last_name': user.last_name or '',
-    #         'email': user.email or '',
-    #     })
-    #     return initial
 
-    # def form_valid(self, form):
-    #     form.update_profile(self.request.user)
-    #     return super().form_valid(form)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['title'] = 'Профиль ' + str(self.request.user)
-        # context['admin_url'] = admin.site.urls
         context['admin_url'] = True if str(self.request.user) == 'admin' else ''
-        # print(context['admin_url'][-1])
-        # print(type(self.request.user))
         return context
 
 
@@ -141,6 +125,7 @@ def logout_user(request):
 
     # def post(self, request, *args, **kwargs):
     #     super(AddPage, self).post(request)
+
 
 # def home_def(request):
 #     table = StigmasTable(Stigmas.objects.all())
@@ -158,3 +143,16 @@ def logout_user(request):
 #     }
 #
 #     return render(request, 'app/index.html', context=context)
+
+
+class ProfileUserPass(SuccessMessageMixin, LoginRequiredMixin,  auth_views.PasswordChangeView):
+    """
+    Страница смены пароля пользователя
+    """
+
+    form_class = CustomAdminPasswordChangeForm
+    template_name = 'app/profile_pass.html'
+    success_message = 'Данные (пароль) обновлены'
+
+    def get_success_url(self):
+        return reverse_lazy('profile', kwargs={'slug': self.request.user})
