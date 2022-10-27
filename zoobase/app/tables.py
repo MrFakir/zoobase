@@ -10,7 +10,6 @@ class StigmasTable(tables.Table):
         per_page = 5
         template_name = "app/table_style.html"
         exclude = ('slug', 'time_create', 'time_update')
-        # attrs = {"class": 'table table-striped-columns'}]
         attrs = {"class": 'table table-light table-striped-columns'}
 
 

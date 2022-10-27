@@ -1,21 +1,29 @@
 from django.contrib.auth import logout
-from django.contrib.auth.forms import AuthenticationForm, AdminPasswordChangeForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User
-from django.contrib.auth.views import LoginView, LogoutView
+from django.contrib.auth.views import LoginView
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import request
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
-from django.views.generic import CreateView, FormView, UpdateView
+from django.views.generic import CreateView, UpdateView
 from django_filters.views import FilterView
 from django_tables2 import SingleTableView
-from django.contrib import admin
+
 from .filters import StigmasFilter
 from .forms import AddStigmaForm, LoginUserForm, ProfileUserForm, CustomAdminPasswordChangeForm
 from .tables import SearchTable, HomeTable
 from .utils import TableViewsMixin
 from django.contrib.auth import views as auth_views
+
+
+
+
+
+
+
+
+
+
 
 
 class Home(TableViewsMixin, SingleTableView):
@@ -101,7 +109,6 @@ class ProfileUser(SuccessMessageMixin, LoginRequiredMixin, UpdateView):
     template_name = 'app/profile.html'
     success_message = 'Данные обновлены'
 
-    # success_url =
     def get_success_url(self):
         return reverse_lazy('profile', kwargs={'slug': self.request.user})
 
@@ -149,7 +156,6 @@ class ProfileUserPass(SuccessMessageMixin, LoginRequiredMixin,  auth_views.Passw
     """
     Страница смены пароля пользователя
     """
-
     form_class = CustomAdminPasswordChangeForm
     template_name = 'app/profile_pass.html'
     success_message = 'Данные (пароль) обновлены'

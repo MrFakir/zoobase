@@ -37,7 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'app.apps.AppConfig',
+    'api.apps.ApiConfig',
     'django_tables2',
+    'rest_framework',
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,7 @@ DJANGO_TABLES2_PAGE_RANGE = 4
 
 FILTERS_EMPTY_CHOICE_LABEL = 'Выберети значение'
 
+
 def FILTERS_VERBOSE_LOOKUPS():
     from django_filters.conf import DEFAULTS
 
@@ -140,7 +143,6 @@ def FILTERS_VERBOSE_LOOKUPS():
     })
     return verbose_lookups
 
-
 # MESSAGE_TAGS = {
 #     messages.DEBUG: 'debug',
 #     messages.INFO: 'info',
@@ -148,3 +150,18 @@ def FILTERS_VERBOSE_LOOKUPS():
 #     messages.WARNING: 'warning',
 #     messages.ERROR: 'error',
 # }
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
+        # 'rest_framework.authentication.BasicAuthentication',
+        # 'rest_framework.authentication.SessionAuthentication',
+
+    ),
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100
+}

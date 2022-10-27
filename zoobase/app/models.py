@@ -17,7 +17,6 @@ class Stigmas(models.Model):
                                     help_text='Выберете тип животного')
     sex = models.ForeignKey('SexTable', on_delete=models.PROTECT, verbose_name='Пол', help_text='Выберете пол')
     the_pet = models.BooleanField(default=False, verbose_name='Домашний', help_text='Домашний/бездомный')
-    # photo = models.ImageField(upload_to="photos/%Y/%m/%d/", verbose_name="Фото")
     phone_number = models.CharField(max_length=20, verbose_name='Номер телефона', help_text='Введите номер телефона', )
     master = models.CharField(max_length=255, verbose_name='Хозяин или Куратор',
                               help_text='Введите хозяина (при наличии) или куратора')

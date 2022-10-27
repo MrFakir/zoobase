@@ -10,7 +10,6 @@ class StigmasFilter(django_filters.FilterSet):
     number__lt = django_filters.NumberFilter(field_name='number', lookup_expr='lte', )
     phone_number = django_filters.NumberFilter(field_name='phone_number',
                                                help_text='Введите номер телефона без восьмёрки')
-    # time_create = django_filters.NumberFilter(field_name='time_create', lookup_expr='year')
     date_created = django_filters.DateFilter(field_name='date_created')
     date_created__gt = django_filters.DateFilter(field_name='date_created', lookup_expr='gte')
     date_created__lt = django_filters.DateFilter(field_name='date_created', lookup_expr='lte')
